@@ -39,9 +39,7 @@ To view the demo, please click on the [link](https://sergii-vasylyshyn-v.github.
 
 ## Screenshots
 
-![Snake Game Screenshot](path/to/screenshot.png)
-
-> _Add a screenshot of your game here by uploading an image to your repository and linking it._
+![Snake Game Screenshot](screenshots/screen.png)
 
 ---
 
@@ -63,6 +61,8 @@ Controls: Use the arrow keys to control the snake.
 Objective: Eat the apples (🍎) to grow the snake.
 Avoid: Colliding with the walls or with the snake's own body.
 Scoring: Each apple eaten increases your score by 1 point.
+
+🐍 At the top of the screen there is an interface where you can change the game speed and field size
 
 ---
 

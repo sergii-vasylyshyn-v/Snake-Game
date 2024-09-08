@@ -63,13 +63,17 @@ body {
   border-radius: 10px;
 }
 
-h2 {
+a {
   color: rgb(120, 120, 120);
   text-transform: uppercase;
   font-weight: 100;
   font-size: 20px;
-
   margin-top: 1%;
+  text-decoration: none;
+}
+
+a:hover {
+  color: rgb(170, 170, 170);
 }
 
 #display {
