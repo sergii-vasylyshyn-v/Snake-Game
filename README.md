@@ -1,6 +1,6 @@
 ## Snake Game 🐍
 
-**Author:** Sergii Vasylyshyn ([GitHub](https://github.com/sergii-vasylyshyn-v))
+**Author:** Sergii Vasylyshyn ([GitHub](https://github.com/sergii-vasylyshyn-v))  
 **Technology:** Pure JavaScript (Vanilla JS)  
 **Status:** Personal Project
 
