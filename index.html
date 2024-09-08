@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Snake</title>
+    <link rel="stylesheet" href="/css/index.css" />
+  </head>
+  <body>
+    <div class="fields">
+      <div class="field">
+        <span>Enter grid size:</span>
+        <input type="number" value="25" id="gridSizeField" />
+      </div>
+      <div class="field">
+        <span>Select game speed:</span>
+        <select id="gameSpeedField">
+          <option value="300">1</option>
+          <option value="250">2</option>
+          <option value="200">3</option>
+          <option value="150">4</option>
+          <option value="100">5</option>
+          <option value="80">6</option>
+          <option value="50">7</option>
+        </select>
+      </div>
+      <div class="field">
+        <button onclick="startGame()">Apply</button>
+      </div>
+    </div>
+    <div id="display"></div>
+    <h2>Snake Game by Sergii Vasylyshyn (Personal Project, Pure JavaScript)</h2>
+    <script src="/js/index.js"></script>
+    <script>
+      startGame();
+    </script>
+  </body>
+</html>

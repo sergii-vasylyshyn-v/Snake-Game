@@ -1,0 +1,86 @@
+:root {
+  --black: rgb(46, 46, 46);
+  --fieldBackground: rgb(100, 100, 100);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  color: rgb(187, 187, 187);
+  box-sizing: border-box;
+}
+
+input,
+select,
+button,
+option {
+  color: #000;
+  height: 30px;
+  width: 100px;
+  border-radius: 5px;
+  border: none;
+  padding: 5px;
+  font-size: 16px;
+}
+
+button {
+  background: rgb(139, 218, 139);
+  cursor: pointer;
+  transition: 0.3s all;
+}
+
+button:hover {
+  background: rgb(102, 196, 102);
+}
+
+html {
+  background: var(--black);
+  width: 100vw;
+  height: 100vh;
+}
+
+body {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.fields {
+  display: flex;
+  width: 100%;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.field {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 10px;
+  border-radius: 10px;
+}
+
+h2 {
+  color: rgb(120, 120, 120);
+  text-transform: uppercase;
+  font-weight: 100;
+  font-size: 20px;
+
+  margin-top: 1%;
+}
+
+#display {
+  background: var(--fieldBackground);
+  height: 70%;
+  aspect-ratio: 1;
+  position: relative;
+}
+
+#display i {
+  position: absolute;
+  display: block;
+  border-radius: 15%;
+}
