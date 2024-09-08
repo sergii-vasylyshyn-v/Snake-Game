@@ -1,9 +1,12 @@
+const global = {};
 function snakeGame(initialParams) {
   const horizontalDirections = ["left", "right"];
   const verticalDirections = ["up", "down"];
   const bodyColor = "rgb(180, 180, 200)";
   const headColor = "rgb(250, 250, 120)";
   const foodColor = "rgb(210, 120, 120)";
+
+  // Create a dot representing part of the snake or food
   function dot(props) {
     let { x, y, color } = props;
     const e = document.createElement("i");
@@ -49,7 +52,8 @@ function snakeGame(initialParams) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 
-  function createSnakeDots() {
+  // Initialize snake dots
+  function createSnake() {
     const snakeLength = 3;
     const dots = [];
     const x = getRandomInt(0, initialParams.field.size - 1);
@@ -67,23 +71,28 @@ function snakeGame(initialParams) {
     return dots;
   }
 
-  let snake = createSnakeDots();
+  let snake = createSnake();
 
-  function randomPositionForFood() {
-    let x = getRandomInt(0, initialParams.field.size - 1);
-    let y = getRandomInt(0, initialParams.field.size - 1);
+  // Generate random position for food
+  function randomPositionFood() {
+    const random = () => {
+      return getRandomInt(0, initialParams.field.size - 1);
+    };
+
+    let [x, y] = [random(), random()];
 
     while (snake.some((dot) => dot.get().x == x && dot.get().y == y)) {
-      x = getRandomInt(0, initialParams.field.size - 1);
-      y = getRandomInt(0, initialParams.field.size - 1);
+      x = random();
+      y = random();
     }
 
     return { x, y };
   }
 
-  function createFoodDot() {
+  // Create Food Dot
+  function createFood() {
     const color = foodColor;
-    const { x, y } = randomPositionForFood();
+    const { x, y } = randomPositionFood();
 
     return dot({
       x,
@@ -92,8 +101,9 @@ function snakeGame(initialParams) {
     });
   }
 
-  const food = createFoodDot();
+  const food = createFood();
 
+  // Check if snake's head eats the food
   function foodEating() {
     const head = snake[snake.length - 1];
     if (food.get().x === head.get().x && food.get().y === head.get().y) {
@@ -107,13 +117,14 @@ function snakeGame(initialParams) {
     initialParams.scoreE.innerHTML = scores;
   }
 
-  function mooving() {
+  // Move the snake in the current direction
+  function moving() {
     let direction = "down";
     let changeDirectionAccept = true;
     let speed = initialParams.gameSpeed;
     const historyMovingTail = [];
 
-    window.snakeInterval = setInterval(() => {
+    global.snakeInterval = setInterval(() => {
       const prevs = [];
       [...snake].reverse().forEach((dot, index) => {
         const isHead = index == 0;
@@ -166,7 +177,7 @@ function snakeGame(initialParams) {
             color: bodyColor,
           })
         );
-        const { x, y } = randomPositionForFood();
+        const { x, y } = randomPositionFood();
         food.set({ x, y });
       }
       changeDirectionAccept = true;
@@ -193,14 +204,15 @@ function snakeGame(initialParams) {
     };
   }
 
-  const moove = mooving();
+  const move = moving();
 
+  // Reset the game
   function resetGame() {
-    const { x, y } = randomPositionForFood();
+    const { x, y } = randomPositionFood();
     food.set({ x, y });
     snake.forEach((dot) => dot.kill());
-    snake = createSnakeDots();
-    moove.setDirection("down");
+    snake = createSnake();
+    move.setDirection("down");
   }
 
   function endGameAnalyze(props) {
@@ -224,13 +236,12 @@ function snakeGame(initialParams) {
     }
   }
 
-  window.snakeListeningDirectionControll = () => {
-    return {
-      left: () => moove.setDirection("left"),
-      right: () => moove.setDirection("right"),
-      down: () => moove.setDirection("down"),
-      up: () => moove.setDirection("up"),
-    };
+  // Methods for control of the game
+  return {
+    left: () => move.setDirection("left"),
+    right: () => move.setDirection("right"),
+    down: () => move.setDirection("down"),
+    up: () => move.setDirection("up"),
   };
 }
 
@@ -240,47 +251,6 @@ const btnRightE = document.querySelector("#buttonControllRight");
 const btnUpE = document.querySelector("#buttonControllUp");
 const btnDownE = document.querySelector("#buttonControllDown");
 const scoreE = document.querySelector("#snakeScore");
-
-const controllCases = {
-  ArrowLeft: {
-    el: btnLeftE,
-    action: () => {
-      const cntrl = window.snakeListeningDirectionControll;
-      if (cntrl) cntrl().left();
-    },
-  },
-  ArrowRight: {
-    el: btnRightE,
-    action: () => {
-      const cntrl = window.snakeListeningDirectionControll;
-      if (cntrl) cntrl().right();
-    },
-  },
-  ArrowUp: {
-    el: btnUpE,
-    action: () => {
-      const cntrl = window.snakeListeningDirectionControll;
-      if (cntrl) cntrl().up();
-    },
-  },
-  ArrowDown: {
-    el: btnDownE,
-    action: () => {
-      const cntrl = window.snakeListeningDirectionControll;
-      if (cntrl) cntrl().down();
-    },
-  },
-};
-
-document.addEventListener("keydown", (event) => {
-  controllCases[event.code].action();
-});
-
-Object.keys(controllCases).forEach((key) => {
-  controllCases[key].el.addEventListener("click", function () {
-    controllCases[key].action();
-  });
-});
 
 function updateSizeOfDisplay() {
   const parentWidth = displayE.parentElement.offsetWidth;
@@ -292,7 +262,7 @@ function updateSizeOfDisplay() {
 
 updateSizeOfDisplay();
 
-window.addEventListener(
+document.addEventListener(
   "resize",
   function (event) {
     updateSizeOfDisplay();
@@ -302,18 +272,70 @@ window.addEventListener(
 
 function startGame() {
   displayE.innerHTML = "";
-  if (window.hasOwnProperty("snakeInterval")) {
-    clearInterval(window.snakeInterval);
+  if (global.hasOwnProperty("snakeInterval")) {
+    clearInterval(global.snakeInterval);
   }
   const gameSpeed = Number(document.querySelector("#gameSpeedField").value);
 
   const size = Number(document.querySelector("#gridSizeField").value);
-  snakeGame({
+  const game = snakeGame({
     displayE: displayE,
     scoreE: scoreE,
     field: {
       size,
     },
     gameSpeed,
+  });
+
+  const controllCases = {
+    ArrowLeft: {
+      el: btnLeftE,
+      action: () => game.left(),
+    },
+    ArrowRight: {
+      el: btnRightE,
+      action: () => game.right(),
+    },
+    ArrowUp: {
+      el: btnUpE,
+      action: () => game.up(),
+    },
+    ArrowDown: {
+      el: btnDownE,
+      action: () => game.down(),
+    },
+  };
+
+  function keydownHandler(event) {
+    if (controllCases[event.code]) {
+      controllCases[event.code].action();
+    }
+  }
+
+  // unsubscribe
+  document.removeEventListener("keydown", keydownHandler);
+
+  Object.keys(controllCases).forEach((key) => {
+    if (controllCases[key].clickHandler) {
+      controllCases[key].el.removeEventListener(
+        "click",
+        controllCases[key].clickHandler
+      );
+    }
+  });
+
+  // subscribe
+  document.addEventListener("keydown", keydownHandler);
+
+  Object.keys(controllCases).forEach((key) => {
+    controllCases[key].clickHandler = function () {
+      if (controllCases[key]) {
+        controllCases[key].action();
+      }
+    };
+    controllCases[key].el.addEventListener(
+      "click",
+      controllCases[key].clickHandler
+    );
   });
 }
