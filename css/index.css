@@ -45,8 +45,8 @@ body {
   height: 100vh;
   display: flex;
   justify-content: center;
-  align-items: center;
-  flex-direction: column;
+  align-items: flex-start;
+  padding: 90px 0px 250px 0px;
 }
 .fields {
   display: flex;
@@ -54,37 +54,199 @@ body {
   gap: 10px;
   align-items: center;
   justify-content: center;
-  margin-bottom: 10px;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 10px;
+  max-width: 900px;
 }
 
 .field {
   background: rgba(255, 255, 255, 0.2);
   padding: 10px;
   border-radius: 10px;
+  width: 320px;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  white-space: nowrap;
 }
 
-a {
+@media (max-width: 600px) {
+  input,
+  select,
+  button,
+  option {
+    height: 20px;
+    width: 60px;
+    border-radius: 5px;
+    border: none;
+    padding: 1px;
+    font-size: 14px;
+  }
+
+  .fields {
+    gap: 5px;
+    padding: 5px;
+  }
+
+  .field {
+    padding: 5px;
+    font-size: 12px;
+    width: auto;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+.additional-information {
   color: rgb(120, 120, 120);
   text-transform: uppercase;
   font-weight: 100;
   font-size: 20px;
-  margin-top: 1%;
+  margin-top: 30px;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 10px;
+  display: flex;
+  gap: 10px;
+  white-space: nowrap;
+}
+
+.additional-information a {
   text-decoration: none;
 }
 
-a:hover {
+.additional-information a:hover {
   color: rgb(170, 170, 170);
 }
 
-#display {
-  background: var(--fieldBackground);
-  height: 70%;
-  aspect-ratio: 1;
+.display-wrap {
+  width: 100vw;
+  height: calc(100vh - 350px);
   position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#display {
+  position: relative;
+  background: rgb(71, 71, 71);
 }
 
 #display i {
   position: absolute;
   display: block;
   border-radius: 15%;
+}
+
+.mobile-controllers {
+  margin-top: 20px;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 50px;
+  max-width: 900px;
+  width: 100%;
+  height: 180px;
+  display: none;
+}
+
+.information-controllers {
+  position: absolute;
+  left: 50%;
+  bottom: 50px;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 900px;
+  text-align: center;
+  text-transform: uppercase;
+  height: 180px;
+}
+
+/* Mobile devices in portrait orientation */
+@media only screen and (max-width: 768px) and (orientation: portrait) {
+  .mobile-controllers {
+    display: block;
+  }
+  .information-controllers {
+    display: none;
+  }
+}
+
+/* Mobile devices in landscape orientation */
+@media only screen and (max-width: 768px) and (orientation: landscape) {
+  .mobile-controllers {
+    display: block;
+  }
+  .information-controllers {
+    display: none;
+  }
+}
+
+/* Tablets in portrait orientation */
+@media only screen and (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
+  .mobile-controllers {
+    display: block;
+  }
+  .information-controllers {
+    display: none;
+  }
+}
+
+/* Tablets in landscape orientation */
+@media only screen and (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+  .mobile-controllers {
+    display: block;
+  }
+  .information-controllers {
+    display: none;
+  }
+}
+
+.controll-button {
+  width: 33.3%;
+  height: 80px;
+  background: rgb(92, 92, 92);
+  color: white;
+  font-weight: 600;
+  position: absolute;
+  border: 1px solid var(--black);
+}
+
+.controll-button:hover {
+  background: rgb(124, 124, 124);
+}
+
+.controll-button.controll-button-left,
+.controll-button.controll-button-right {
+  height: 100%;
+}
+
+.controll-button.controll-button-left {
+  left: 0;
+  top: 0;
+}
+
+.controll-button.controll-button-right {
+  right: 0;
+  top: 0;
+}
+
+.controll-button.controll-button-up,
+.controll-button.controll-button-down {
+  height: 50%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.controll-button.controll-button-top {
+  top: 0;
+}
+
+.controll-button.controll-button-down {
+  bottom: 0;
 }

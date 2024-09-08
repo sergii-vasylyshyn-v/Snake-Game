@@ -7,7 +7,7 @@ function snakeGame(initialParams) {
   function dot(props) {
     let { x, y, color } = props;
     const e = document.createElement("i");
-    initialParams.displayElement.appendChild(e);
+    initialParams.displayE.appendChild(e);
 
     function applyState() {
       const step = 100 / initialParams.field.size;
@@ -102,6 +102,11 @@ function snakeGame(initialParams) {
     return false;
   }
 
+  function updateScore() {
+    const scores = snake.length - 3;
+    initialParams.scoreE.innerHTML = scores;
+  }
+
   function mooving() {
     let direction = "down";
     let changeDirectionAccept = true;
@@ -165,6 +170,7 @@ function snakeGame(initialParams) {
         food.set({ x, y });
       }
       changeDirectionAccept = true;
+      updateScore();
     }, speed);
 
     return {
@@ -218,31 +224,84 @@ function snakeGame(initialParams) {
     }
   }
 
-  function listenButtons() {
-    document.addEventListener("keydown", (event) => {
-      switch (event.code) {
-        case "ArrowUp":
-          moove.setDirection("up");
-          break;
-        case "ArrowDown":
-          moove.setDirection("down");
-          break;
-        case "ArrowLeft":
-          moove.setDirection("left");
-          break;
-        case "ArrowRight":
-          moove.setDirection("right");
-          break;
-      }
-    });
-  }
-
-  listenButtons();
+  window.snakeListeningDirectionControll = () => {
+    return {
+      left: () => moove.setDirection("left"),
+      right: () => moove.setDirection("right"),
+      down: () => moove.setDirection("down"),
+      up: () => moove.setDirection("up"),
+    };
+  };
 }
 
+const displayE = document.querySelector("#display");
+const btnLeftE = document.querySelector("#buttonControllLeft");
+const btnRightE = document.querySelector("#buttonControllRight");
+const btnUpE = document.querySelector("#buttonControllUp");
+const btnDownE = document.querySelector("#buttonControllDown");
+const scoreE = document.querySelector("#snakeScore");
+
+const controllCases = {
+  ArrowLeft: {
+    el: btnLeftE,
+    action: () => {
+      const cntrl = window.snakeListeningDirectionControll;
+      if (cntrl) cntrl().left();
+    },
+  },
+  ArrowRight: {
+    el: btnRightE,
+    action: () => {
+      const cntrl = window.snakeListeningDirectionControll;
+      if (cntrl) cntrl().right();
+    },
+  },
+  ArrowUp: {
+    el: btnUpE,
+    action: () => {
+      const cntrl = window.snakeListeningDirectionControll;
+      if (cntrl) cntrl().up();
+    },
+  },
+  ArrowDown: {
+    el: btnDownE,
+    action: () => {
+      const cntrl = window.snakeListeningDirectionControll;
+      if (cntrl) cntrl().down();
+    },
+  },
+};
+
+document.addEventListener("keydown", (event) => {
+  controllCases[event.code].action();
+});
+
+Object.keys(controllCases).forEach((key) => {
+  controllCases[key].el.addEventListener("click", function () {
+    controllCases[key].action();
+  });
+});
+
+function updateSizeOfDisplay() {
+  const parentWidth = displayE.parentElement.offsetWidth;
+  const parentHeight = displayE.parentElement.offsetHeight;
+  const mainSize = parentWidth > parentHeight ? parentHeight : parentWidth;
+  displayE.style.width = `${mainSize}px`;
+  displayE.style.height = `${mainSize}px`;
+}
+
+updateSizeOfDisplay();
+
+window.addEventListener(
+  "resize",
+  function (event) {
+    updateSizeOfDisplay();
+  },
+  true
+);
+
 function startGame() {
-  const displayElement = document.querySelector("#display");
-  displayElement.innerHTML = "";
+  displayE.innerHTML = "";
   if (window.hasOwnProperty("snakeInterval")) {
     clearInterval(window.snakeInterval);
   }
@@ -250,7 +309,8 @@ function startGame() {
 
   const size = Number(document.querySelector("#gridSizeField").value);
   snakeGame({
-    displayElement,
+    displayE: displayE,
+    scoreE: scoreE,
     field: {
       size,
     },
