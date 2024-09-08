@@ -5,6 +5,7 @@
 **Status:** Personal Project
 
 - [Introduction](#introduction)
+- [Demo](#demo)
 - [Features](#features)
 - [Screenshots](#screenshots)
 - [Technologies Used](#technologies-used)
