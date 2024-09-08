@@ -40,7 +40,9 @@ To view the demo, please click on the [link](https://sergii-vasylyshyn-v.github.
 
 ## Screenshots
 
-![Snake Game Screenshot](screenshots/screen.png)
+![Snake Game Screenshot](screenshots/screen1.png)
+
+![Snake Game Screenshot](screenshots/screen2.png)
 
 ---
 

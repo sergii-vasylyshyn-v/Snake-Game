@@ -3,15 +3,19 @@
   <head>
     <title>Snake</title>
     <link rel="stylesheet" href="css/index.css" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0"
+    />
   </head>
   <body>
     <div class="fields">
       <div class="field">
-        <span>Enter grid size:</span>
+        <span>Size:</span>
         <input type="number" value="25" id="gridSizeField" />
       </div>
       <div class="field">
-        <span>Select game speed:</span>
+        <span>Speed:</span>
         <select id="gameSpeedField">
           <option value="300">1</option>
           <option value="250">2</option>
@@ -26,10 +30,41 @@
         <button onclick="startGame()">Apply</button>
       </div>
     </div>
-    <div id="display"></div>
-    <a target="_blank" href="https://github.com/sergii-vasylyshyn-v/Snake-Game"
-      >Github Project</a
-    >
+    <div class="display-wrap">
+      <div id="display"></div>
+    </div>
+    <div class="mobile-controllers">
+      <button
+        class="controll-button controll-button-left"
+        id="buttonControllLeft"
+        >LEFT</button
+      >
+      <button
+        class="controll-button controll-button-right"
+        id="buttonControllRight"
+        >RIGHT</button
+      >
+      <button class="controll-button controll-button-up" id="buttonControllUp"
+        >UP</button
+      >
+      <button
+        class="controll-button controll-button-down"
+        id="buttonControllDown"
+        >DOWN</button
+      >
+    </div>
+    <div class="information-controllers">
+      <span>Use the arrows on your keyboard to control</span>
+    </div>
+    <div class="additional-information">
+      <span>Score: <span id="snakeScore">0</span></span>
+      <span>|</span>
+      <a
+        target="_blank"
+        href="https://github.com/sergii-vasylyshyn-v/Snake-Game"
+        >Github Project</a
+      >
+    </div>
     <script src="js/index.js"></script>
     <script>
       startGame();
